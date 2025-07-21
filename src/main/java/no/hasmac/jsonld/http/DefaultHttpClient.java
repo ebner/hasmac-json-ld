@@ -27,12 +27,16 @@ import java.net.URI;
 import java.net.http.HttpClient.Redirect;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Optional;
 
 public final class DefaultHttpClient implements HttpClient {
 
-    private static final java.net.http.HttpClient CLIENT = java.net.http.HttpClient.newBuilder().followRedirects(Redirect.NEVER).build();
+    private static final java.net.http.HttpClient CLIENT = java.net.http.HttpClient.newBuilder()
+            .connectTimeout(Duration.of(10, ChronoUnit.SECONDS))
+            .followRedirects(Redirect.NEVER).build();
 
     private static final DefaultHttpClient INSTANCE = new DefaultHttpClient(CLIENT);
 
