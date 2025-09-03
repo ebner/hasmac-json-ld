@@ -38,7 +38,6 @@ public class RdfToObjectTest {
         assertNotNull(result);
         assertTrue(result.containsKey("@value"));
         assertTrue(result.containsKey("@language"));
-        assertTrue(result.containsKey("@type"));
     }
 
 }

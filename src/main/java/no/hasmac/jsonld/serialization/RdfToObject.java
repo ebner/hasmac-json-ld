@@ -115,9 +115,7 @@ final class RdfToObject {
 
                     convertedValue = JsonProvider.instance().createValue(Double.parseDouble(literal.getValue()));
 
-                } else if (literal.getDatatype() != null) {
-
-                    type = literal.getDatatype();
+                } else if (RdfConstants.LANG_STRING.equals(literal.getDatatype())) {
 
                     if (literal.getLanguage().isPresent()) {
                         literal
@@ -125,6 +123,11 @@ final class RdfToObject {
                                 .map(v -> JsonProvider.instance().createValue(v))
                                 .ifPresent(language -> result.add(Keywords.LANGUAGE, language));
                     }
+
+                } else if (literal.getDatatype() != null) {
+
+                    type = literal.getDatatype();
+
                 }
             }
 
@@ -177,7 +180,6 @@ final class RdfToObject {
                 .getLanguage()
                 .map(v -> JsonProvider.instance().createValue(v))
                 .ifPresent(language -> result.add(Keywords.LANGUAGE, language));
-            type = literal.getDatatype();
 
         // 2.8.
         } else if (literal.getDatatype() != null
