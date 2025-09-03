@@ -177,6 +177,7 @@ final class RdfToObject {
                 .getLanguage()
                 .map(v -> JsonProvider.instance().createValue(v))
                 .ifPresent(language -> result.add(Keywords.LANGUAGE, language));
+            type = literal.getDatatype();
 
         // 2.8.
         } else if (literal.getDatatype() != null
