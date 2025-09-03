@@ -18,7 +18,6 @@
 
 package no.hasmac.jsonld.serialization;
 
-import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonValue;
@@ -119,6 +118,13 @@ final class RdfToObject {
                 } else if (literal.getDatatype() != null) {
 
                     type = literal.getDatatype();
+
+                    if (literal.getLanguage().isPresent()) {
+                        literal
+                                .getLanguage()
+                                .map(v -> JsonProvider.instance().createValue(v))
+                                .ifPresent(language -> result.add(Keywords.LANGUAGE, language));
+                    }
                 }
             }
 
